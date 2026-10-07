@@ -3,8 +3,9 @@ PLAN: "feat: network access contract, in-memory gateway and conformance suite"
 TAG: v0.1.0
 EXECUTOR: jules
 REVIEWER: none
-STATUS: running
+STATUS: review
 SESSION: 13863358207458738616
+PR: https://github.com/webtyp/network/pull/1
 ---
 
 > This plan is dispatched via the CodeJob workflow. See skill: agents-workflow.
