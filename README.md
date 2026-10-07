@@ -1,4 +1,5 @@
 # webtyp/network
+<img src="docs/img/badges.svg">
 
 `network` is the **contract between an inventory of devices and the box that enforces network access** (a router). It answers three questions an application has about its local network:
 1. *Which devices may use the network, and how much of it?* — a list of `Host` (one per network card: MAC, IP, name) with an `Access` level.
