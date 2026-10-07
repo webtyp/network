@@ -35,7 +35,7 @@ func (g *Gateway) Plan(d network.Desired) (network.Plan, error) {
 	var conflicts []network.Conflict
 	var warnings []network.Warning
 
-	summary := fmt.Sprintf("dhcp=%s pool=%s dns=%s unregistered=%d", d.Settings.DHCPServer, d.Settings.DynamicPool, d.Settings.FilterDNS, int(d.Settings.Unregistered))
+	summary := fmt.Sprintf("dhcp=%s pool=%s dns=%s unregistered=%s", d.Settings.DHCPServer, d.Settings.DynamicPool, d.Settings.FilterDNS, d.Settings.Unregistered.String())
 	if !g.hasSettings {
 		changes = append(changes, network.Change{
 			Kind:   network.ChangeAdd,
@@ -43,7 +43,7 @@ func (g *Gateway) Plan(d network.Desired) (network.Plan, error) {
 			After:  summary,
 		})
 	} else if g.settings != d.Settings {
-		beforeSummary := fmt.Sprintf("dhcp=%s pool=%s dns=%s unregistered=%d", g.settings.DHCPServer, g.settings.DynamicPool, g.settings.FilterDNS, int(g.settings.Unregistered))
+		beforeSummary := fmt.Sprintf("dhcp=%s pool=%s dns=%s unregistered=%s", g.settings.DHCPServer, g.settings.DynamicPool, g.settings.FilterDNS, g.settings.Unregistered.String())
 		changes = append(changes, network.Change{
 			Kind:   network.ChangeUpdate,
 			Object: ObjectSettings,
@@ -62,8 +62,8 @@ func (g *Gateway) Plan(d network.Desired) (network.Plan, error) {
 						Kind:   network.ChangeUpdate,
 						Object: fmt.Sprintf("host %s", dh.MAC),
 						Host:   dh,
-						Before: fmt.Sprintf("ip=%s name=%s access=%d", mh.IP, mh.Name, int(mh.Access)),
-						After:  fmt.Sprintf("ip=%s name=%s access=%d", dh.IP, dh.Name, int(dh.Access)),
+						Before: fmt.Sprintf("ip=%s name=%s access=%s", mh.IP, mh.Name, mh.Access.String()),
+						After:  fmt.Sprintf("ip=%s name=%s access=%s", dh.IP, dh.Name, dh.Access.String()),
 					})
 				}
 				break
@@ -80,7 +80,7 @@ func (g *Gateway) Plan(d network.Desired) (network.Plan, error) {
 						Object: fmt.Sprintf("host %s", dh.MAC),
 						Host:   dh,
 						Before: fmt.Sprintf("ip=%s name=%s internet=%t", uh.IP, uh.Name, uh.Internet),
-						After:  fmt.Sprintf("ip=%s name=%s access=%d", dh.IP, dh.Name, int(dh.Access)),
+						After:  fmt.Sprintf("ip=%s name=%s access=%s", dh.IP, dh.Name, dh.Access.String()),
 					})
 					break
 				}
@@ -90,7 +90,7 @@ func (g *Gateway) Plan(d network.Desired) (network.Plan, error) {
 					Kind:   network.ChangeAdd,
 					Object: fmt.Sprintf("host %s", dh.MAC),
 					Host:   dh,
-					After:  fmt.Sprintf("ip=%s name=%s access=%d", dh.IP, dh.Name, int(dh.Access)),
+					After:  fmt.Sprintf("ip=%s name=%s access=%s", dh.IP, dh.Name, dh.Access.String()),
 				})
 			}
 		}
@@ -118,7 +118,7 @@ func (g *Gateway) Plan(d network.Desired) (network.Plan, error) {
 				Kind:   network.ChangeRemove,
 				Object: fmt.Sprintf("host %s", mh.MAC),
 				Host:   mh,
-				Before: fmt.Sprintf("ip=%s name=%s access=%d", mh.IP, mh.Name, int(mh.Access)),
+				Before: fmt.Sprintf("ip=%s name=%s access=%s", mh.IP, mh.Name, mh.Access.String()),
 			})
 		}
 	}
