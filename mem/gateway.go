@@ -142,10 +142,11 @@ func (g *Gateway) Plan(d network.Desired) (network.Plan, error) {
 		}
 	}
 
-	fingerprintStr := fmt.Sprintf("%d:", g.version)
+	canonical := fmt.Sprintf("%d:", g.version)
 	for _, c := range changes {
-		fingerprintStr += fmt.Sprintf("%d|%s|%s;", int(c.Kind), c.Object, c.After)
+		canonical += fmt.Sprintf("%d|%s|%s;", int(c.Kind), c.Object, c.After)
 	}
+	fingerprintStr := fnv64Hex(canonical)
 
 	return network.Plan{
 		Changes:     changes,
@@ -215,4 +216,26 @@ func (g *Gateway) Discover() ([]network.Discovered, error) {
 	res := make([]network.Discovered, len(g.unmanaged))
 	copy(res, g.unmanaged)
 	return res, nil
+}
+
+// FNV-1a 64-bit (reflection- and stdlib-free, so the package stays WASM/TinyGo
+// friendly): the fingerprint is lower-case hex, as the contract requires.
+const (
+	fnvOffset64 = 14695981039346656037
+	fnvPrime64  = 1099511628211
+	hexDigits   = "0123456789abcdef"
+)
+
+func fnv64Hex(s string) string {
+	var h uint64 = fnvOffset64
+	for i := 0; i < len(s); i++ {
+		h ^= uint64(s[i])
+		h *= fnvPrime64
+	}
+	out := make([]byte, 16)
+	for i := 15; i >= 0; i-- {
+		out[i] = hexDigits[h&0xf]
+		h >>= 4
+	}
+	return string(out)
 }

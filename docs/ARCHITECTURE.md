@@ -31,7 +31,7 @@ reference implementation (`network/mem`) and an executable conformance suite
 | **Adoption** | A registered host whose MAC already has an unmanaged lease: applying the plan turns that lease into a managed one. Shown in the plan as `ChangeAdopt` |
 | **Conflict** | A change that cannot be made without breaking hand-made configuration (another MAC holds the IP). Blocks `Apply` |
 | **Warning** | Something the administrator should know but that does not block (a device with Internet by a hand-made rule that is not registered) |
-| **Fingerprint** | An opaque token identifying one exact plan against one exact gateway state |
+| **Fingerprint** | An opaque token identifying one exact plan against one exact gateway state; always non-empty lower-case hex |
 
 ## Decisions
 

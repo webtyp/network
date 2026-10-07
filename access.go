@@ -51,7 +51,7 @@ type Unregistered uint8
 
 const (
 	UnregisteredNoAddress Unregistered = iota // no IP at all
-	UnregisteredLocal                          // an IP from Settings.DynamicPool, local network only
+	UnregisteredLocal                         // an IP from Settings.DynamicPool, local network only
 )
 
 const (

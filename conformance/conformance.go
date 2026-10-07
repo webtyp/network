@@ -68,6 +68,10 @@ func Run(t *testing.T, newFixture func(t *testing.T) Fixture) {
 			t.Errorf("Expected changes for h1, h2, and sitewide, got: %v", p1.Changes)
 		}
 
+		if !isLowerHex(string(p1.Fingerprint)) {
+			t.Errorf("Fingerprint %q is not non-empty lower-case hex", p1.Fingerprint)
+		}
+
 		_, err = gw.Apply(d, p1.Fingerprint)
 		if err != nil {
 			t.Fatalf("Apply failed: %v", err)
@@ -390,4 +394,18 @@ func Run(t *testing.T, newFixture func(t *testing.T) Fixture) {
 			t.Errorf("Expected to find unmanaged entry, got: %v", unmanaged)
 		}
 	})
+}
+
+// isLowerHex reports whether s is non-empty and made only of [0-9a-f].
+func isLowerHex(s string) bool {
+	if s == "" {
+		return false
+	}
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		if !(c >= '0' && c <= '9' || c >= 'a' && c <= 'f') {
+			return false
+		}
+	}
+	return true
 }

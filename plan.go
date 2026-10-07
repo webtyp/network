@@ -31,7 +31,9 @@ type Warning struct {
 	Reason string
 }
 
-// Fingerprint identifies one exact plan against one exact gateway state.
+// Fingerprint identifies one exact plan against one exact gateway state. It is
+// opaque but always non-empty lower-case hex ([0-9a-f]+), so consumers can carry
+// it through text fields and URLs without escaping.
 type Fingerprint string
 
 type Plan struct {

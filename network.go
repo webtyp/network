@@ -15,9 +15,9 @@ type Host struct {
 // Settings apply to the whole site. The consumer stores them (they change
 // without recompiling); the gateway enforces them.
 type Settings struct {
-	DHCPServer   string       // name of the gateway's DHCP server that serves the hosts
-	DynamicPool  string       // pool for unregistered devices; required only with UnregisteredLocal
-	FilterDNS    string       // IPv4 of the resolver forced on AccessInternetFiltered hosts
+	DHCPServer   string // name of the gateway's DHCP server that serves the hosts
+	DynamicPool  string // pool for unregistered devices; required only with UnregisteredLocal
+	FilterDNS    string // IPv4 of the resolver forced on AccessInternetFiltered hosts
 	Unregistered Unregistered
 }
 
