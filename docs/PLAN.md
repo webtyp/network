@@ -2,8 +2,9 @@
 PLAN: "feat(network): IsPlanStale, IsConflicts — detect apply sentinels without == between interfaces"
 EXECUTOR: jules
 REVIEWER: none
-STATUS: running
+STATUS: review
 SESSION: 3876908821021090945
+PR: https://github.com/webtyp/network/pull/2
 ---
 
 # Plan — `network.IsPlanStale(err)`, `network.IsConflicts(err)`
