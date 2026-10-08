@@ -57,7 +57,7 @@ type Applier interface {
 	// Apply re-plans d; if the result's Fingerprint differs from expected it
 	// returns ErrPlanStale and changes nothing; if it has Conflicts it returns
 	// ErrConflicts and changes nothing; otherwise it applies every Change and
-	// returns the plan it applied.
+	// returns the plan it applied. (detect them with IsPlanStale / IsConflicts, never ==)
 	Apply(d Desired, expected Fingerprint) (Plan, error)
 }
 

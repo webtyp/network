@@ -29,7 +29,7 @@ reference implementation (`network/mem`) and an executable conformance suite
 | **Managed object** | Something on the gateway this contract created (a DHCP lease, a firewall rule). Implementations mark them; they never touch anything else except by **adoption** |
 | **Unmanaged object** | Configuration made by hand on the gateway |
 | **Adoption** | A registered host whose MAC already has an unmanaged lease: applying the plan turns that lease into a managed one. Shown in the plan as `ChangeAdopt` |
-| **Conflict** | A change that cannot be made without breaking hand-made configuration (another MAC holds the IP). Blocks `Apply` |
+| **Conflict** | A change that cannot be made without breaking hand-made configuration (another MAC holds the IP). Blocks `Apply` (detect `ErrConflicts` with `IsConflicts`) |
 | **Warning** | Something the administrator should know but that does not block (a device with Internet by a hand-made rule that is not registered) |
 | **Fingerprint** | An opaque token identifying one exact plan against one exact gateway state; always non-empty lower-case hex |
 
@@ -55,7 +55,7 @@ Three ways to push an inventory to a router were considered:
 
 This is `terraform plan` / `terraform apply`, and Ansible's `--check --diff`. `Apply` takes the
 `Fingerprint` of the plan the operator reviewed; if the gateway changed in between (someone edited it
-by hand, another operator applied) it refuses with `ErrPlanStale` instead of applying something nobody
+by hand, another operator applied) it refuses with `ErrPlanStale` (detect with `IsPlanStale`) instead of applying something nobody
 reviewed.
 
 ### Implementations own only what they created
