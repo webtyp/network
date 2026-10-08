@@ -2,6 +2,8 @@
 PLAN: "feat(network): IsPlanStale, IsConflicts — detect apply sentinels without == between interfaces"
 EXECUTOR: jules
 REVIEWER: none
+STATUS: running
+SESSION: 3876908821021090945
 ---
 
 # Plan — `network.IsPlanStale(err)`, `network.IsConflicts(err)`
