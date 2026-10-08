@@ -110,7 +110,7 @@ func Run(t *testing.T, newFixture func(t *testing.T) Fixture) {
 		}
 
 		_, err = gw.Apply(d, p1.Fingerprint)
-		if err != network.ErrPlanStale {
+		if !network.IsPlanStale(err) {
 			t.Errorf("Expected ErrPlanStale, got %v", err)
 		}
 
@@ -302,7 +302,7 @@ func Run(t *testing.T, newFixture func(t *testing.T) Fixture) {
 		}
 
 		_, err = gw.Apply(d, p.Fingerprint)
-		if err != network.ErrConflicts {
+		if !network.IsConflicts(err) {
 			t.Errorf("Expected ErrConflicts, got %v", err)
 		}
 
